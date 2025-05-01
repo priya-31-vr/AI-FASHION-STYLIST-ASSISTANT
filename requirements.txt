@@ -1,0 +1,8 @@
+streamlit
+Pillow
+numpy
+requests
+python-dotenv
+google-generativeai
+chromadb
+datasets
