@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Fashion Stylist Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text-light: #f5f5f5;
+      --accent: #1e1e2f;
+      --button-gradient: linear-gradient(135deg, #1e1e2f, #3a3a5a);
+      --glass-bg: rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-light);
+      overflow: hidden;
+    }
+
+    .bg-slideshow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      transition: background-image 1s ease-in-out;
+    }
+
+    .bg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.85));
+      backdrop-filter: blur(4px);
+      z-index: -1;
+    }
+
+    .overlay {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      max-width: 700px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    p {
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin-bottom: 30px;
+      color: var(--text-light);
+    }
+
+    input {
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      width: 80%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    input::placeholder {
+      color: #ccc;
+    }
+
+    button {
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      background: var(--button-gradient);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 25px rgba(30, 30, 47, 0.3);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .glass-card {
+        padding: 20px;
+      }
+
+      button {
+        padding: 12px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="bg" class="bg-slideshow"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="overlay">
+    <div class="glass-card" id="step1">
+      <h1>Welcome to AI Fashion Stylist Assistant</h1>
+      <p>Your smart companion for curated style and elegance.</p>
+      <button onclick="nextStep()">Next ➡️</button>
+    </div>
+
+    <div class="glass-card" id="step2" style="display:none;">
+      <h1>How It Helps</h1>
+      <p>✨ Get personalized outfit ideas<br>🎯 Match your vibe & occasion<br>👗 Explore seasonal fashion trends<br>🔮 Powered by AI insights</p>
+      <button onclick="nextStep()">Next ➡️</button>
+    </div>
+
+    <div class="glass-card" id="step3" style="display:none;">
+      <h1>Let’s Begin</h1>
+      <p>What’s your name?</p>
+      <input type="text" id="username" placeholder="Enter your name..." />
+      <br>
+      <button onclick="startStyling()">💼 Begin Styling</button>
+    </div>
+
+    <footer>&copy; 2025 StyleGenie AI. All rights reserved.</footer>
+  </div>
+
+  <script>
+    const backgrounds = [
+      "https://source.unsplash.com/1920x1080/?fashion,night",
+      "https://source.unsplash.com/1920x1080/?runway,glam",
+      "https://source.unsplash.com/1920x1080/?fashion,style",
+      "https://source.unsplash.com/1920x1080/?model,outfit",
+      "https://source.unsplash.com/1920x1080/?urban,style",
+      "https://source.unsplash.com/1920x1080/?streetwear",
+      "https://source.unsplash.com/1920x1080/?vintage,clothes",
+      "https://source.unsplash.com/1920x1080/?fashionweek",
+      "https://source.unsplash.com/1920x1080/?designer,clothing",
+      "https://source.unsplash.com/1920x1080/?catwalk",
+      "https://source.unsplash.com/1920x1080/?luxury,attire",
+    ];
+
+    let bgIndex = 0;
+    const bgElement = document.getElementById('bg');
+
+    function cycleBackgrounds() {
+      bgElement.style.backgroundImage = `url('${backgrounds[bgIndex]}')`;
+      bgIndex = (bgIndex + 1) % backgrounds.length;
+    }
+
+    setInterval(cycleBackgrounds, 2000);
+    cycleBackgrounds();
+
+    let currentStep = 1;
+    function nextStep() {
+      document.getElementById(`step${currentStep}`).style.display = 'none';
+      currentStep++;
+      document.getElementById(`step${currentStep}`).style.display = 'block';
+    }
+
+    function startStyling() {
+      const name = document.getElementById('username').value;
+      if (name.trim() !== '') {
+        window.location.href = 'http://localhost:8501'; // Replace with your actual styling page
+      } else {
+        alert('Please enter your name before proceeding.');
+      }
+    }
+  </script>
+</body>
+</html>
