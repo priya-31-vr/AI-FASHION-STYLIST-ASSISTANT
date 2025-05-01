@@ -1,7 +1,7 @@
 # AI Fashion Stylist Project
 
 This repository contains the code and resources to build your very own AI Fashion Stylist. The AI recommends personalized outfits based on your preferences, style trends, and fashion data.
-
+The AI Fashion Stylist Assistant uses advanced AI technologies like Gemini, OpenCLIP embeddings, and ChromaDB to provide personalized fashion recommendations. It processes both text and image-based queries, offering tailored styling suggestions and trends to help users create stylish outfits effortlessly.
 ## Overview
 
 In this project, you'll learn how to:
