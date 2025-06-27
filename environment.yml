@@ -1,0 +1,17 @@
+name: ai-fashion-assistant
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - streamlit
+    - openai
+    - chromadb
+    - open-clip-torch
+    - requests
+    - numpy
+    - pillow
+    - python-dotenv
+    - transformers
