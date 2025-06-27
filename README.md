@@ -17,4 +17,22 @@ In this project, you'll learn how to:
 Below is a visual representation of the process flow for the AI Fashion Stylist. This flowchart outlines how the model processes data to deliver personalized outfit recommendations.
 
 ![Flowchart](Diagram.drawio(1).png)
+---
+
+## ⚙️ Setup Instructions
+
+### 🔹 Clone the repo
+
+git clone https://github.com/your-username/AI-FASHION-STYLIST-ASSISTANT.git
+cd AI-FASHION-STYLIST-ASSISTANT
+[10:52 am, 27/6/2025] Priya💕: cd AI-FASHION-STYLIST-ASSISTANT
+[10:53 am, 27/6/2025] Priya💕: Run Instructions
+
+Step 1: Download model data
+RUN INSTRUCTIONS:
+
+Run the following command to store necessary files from Hugging Face into the data/ folder:
+python storefile.py
+Step 2: Launch the app
+streamlit run launcher.py
 
